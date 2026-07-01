@@ -22,12 +22,17 @@ import CreateBlog from './components/admin/CreateBlog';
 import BlogEdit from './components/admin/BlogEdit';
 import AdminComments from './components/admin/AdminComments';
 
+import Footer from './components/shared/Footer';
+
 const MainLayout = () => {
   return (
-    <>
+    <div className="d-flex flex-column min-vh-100">
       <Navbar />
-      <Outlet />
-    </>
+      <main className="flex-grow-1">
+        <Outlet />
+      </main>
+      <Footer />
+    </div>
   );
 };
 
