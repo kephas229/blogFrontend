@@ -2,6 +2,7 @@
 import BlogCard from './BlogCard';
 import { isLoggedIn } from '../auth/auth';
 import API_URL from '../../api.js';
+import { BlogCardSkeleton } from '../shared/Skeleton';
 
 const Blogs = () => {
     const [blogs, setBlogs]       = useState([]);
@@ -85,8 +86,8 @@ const Blogs = () => {
             </div>
 
             {loading ? (
-                <div className="text-center py-5">
-                    <div className="spinner-border text-secondary" role="status" />
+                <div className="row">
+                    {[...Array(6)].map((_, i) => <BlogCardSkeleton key={i} />)}
                 </div>
             ) : blogs.length === 0 && searched ? (
                 <div className="text-center py-5">

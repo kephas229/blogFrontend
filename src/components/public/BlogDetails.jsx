@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Comments from './Comments';
+import { BlogDetailsSkeleton } from '../shared/Skeleton';
 
 const BlogDetails = () => {
     const [blog, setBlog]     = useState(null);
@@ -30,11 +31,7 @@ const BlogDetails = () => {
         </div>
     );
 
-    if (!blog) return (
-        <div className="container pt-5 text-center">
-            <div className="spinner-border text-secondary" role="status" />
-        </div>
-    );
+    if (!blog) return <BlogDetailsSkeleton />;
 
     return (
         <div className="container">

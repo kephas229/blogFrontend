@@ -1,11 +1,12 @@
 ﻿import API_URL from '../../api.js';
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import CommentList from './CommentList';
 import CommentForm from './CommentForm';
+import { CommentsSkeleton } from '../shared/Skeleton';
 
 const Comments = ({ blogId }) => {
-
     const [comments, setComments] = useState([]);
+    const [loading, setLoading]   = useState(true);
 
     useEffect(() => {
         chargerCommentaires();
@@ -14,12 +15,16 @@ const Comments = ({ blogId }) => {
     const chargerCommentaires = async () => {
         try {
             const response = await fetch(`${API_URL}/api/blogs/${blogId}/comments`);
-            const result = await response.json();
+            const result   = await response.json();
             setComments(result.data || []);
-        } catch (error) {
-            console.error('Erreur lors du chargement des commentaires :', error);
+        } catch {
+            console.error('Erreur lors du chargement des commentaires.');
+        } finally {
+            setLoading(false);
         }
     };
+
+    if (loading) return <CommentsSkeleton />;
 
     return (
         <div className="col-md-8 mt-5">
@@ -32,7 +37,6 @@ const Comments = ({ blogId }) => {
 
             <hr className="my-4" />
 
-            {/* onCommentAdded : appelé par CommentForm après un envoi réussi */}
             <CommentForm blogId={blogId} onCommentAdded={chargerCommentaires} />
         </div>
     );

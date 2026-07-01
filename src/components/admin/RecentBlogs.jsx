@@ -1,8 +1,9 @@
-import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { RecentBlogsSkeleton } from '../shared/Skeleton';
 
-// Affiche la liste des 5 derniers articles créés
-const RecentBlogs = ({ blogs = [] }) => {
+const RecentBlogs = ({ blogs = [], loading }) => {
+    if (loading) return <RecentBlogsSkeleton />;
+
     return (
         <div className="card border-0 shadow-sm">
             <div className="card-body">

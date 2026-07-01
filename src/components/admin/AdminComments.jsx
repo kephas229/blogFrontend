@@ -4,10 +4,12 @@ import { toast } from 'react-toastify';
 import { authHeaders } from '../auth/auth';
 import ConfirmDialog from '../shared/ConfirmDialog';
 import useConfirm from '../shared/useConfirm';
+import { AdminCommentsSkeleton } from '../shared/Skeleton';
 
 const AdminComments = () => {
     const [comments, setComments] = useState([]);
     const [erreur, setErreur]     = useState('');
+    const [loading, setLoading]   = useState(true);
     const { confirm, dialogProps } = useConfirm();
 
     useEffect(() => {
@@ -24,6 +26,8 @@ const AdminComments = () => {
             setComments(result.data || []);
         } catch {
             setErreur('Impossible de charger les commentaires. Réessaie plus tard.');
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -47,6 +51,13 @@ const AdminComments = () => {
             toast.error('Erreur lors de la suppression. Réessaie.');
         }
     };
+
+    if (loading) return (
+        <>
+            <ConfirmDialog {...dialogProps} />
+            <AdminCommentsSkeleton />
+        </>
+    );
 
     return (
         <>
